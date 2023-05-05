@@ -22,7 +22,7 @@ class Pessoa {
     void print(){
         std::cout << "Nome: " << nome << " " << sobrenome << std::endl;
         std::cout << "CPF: " << cpf << std::endl;
-        std::cout << "Data de nascimento: " << nascimento << std::endl;
+        std::cout << "Data de Nascimento: " << nascimento << std::endl;
         std::cout << "Natural de: " << cidade << std::endl;
     }
 };

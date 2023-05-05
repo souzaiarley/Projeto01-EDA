@@ -24,7 +24,19 @@ public:
     }
 
     bool search(T dado){
-        return search(root, dado); 
+        if (search(root, dado) != nullptr){
+            return true;
+        } 
+        return false;
+    }
+
+    void cpfData(string cpf){
+        Node<T> *node = search(root, cpf);
+        if (node != nullptr){
+            node->pessoa->print();
+            return;
+        }
+        cout << "Error: cpf not found" << endl;
     }
 
     ~avl_tree(){
@@ -129,12 +141,12 @@ private:
         return nullptr;
     }
 
-    bool search(Node<T> *node, T dado){
+    Node<T>* search(Node<T> *node, T dado){
         if (node == nullptr){
-            return false;
+            return node;
         }
         if (node->dado == dado){
-            return true;
+            return node;
         }
         if (dado < node->dado){
             return search(node->left, dado); 
