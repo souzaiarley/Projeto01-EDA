@@ -18,11 +18,11 @@ int main (){
     avl_tree<Data> *bornTree = new avl_tree<Data>;
 
     for (int i = 0; i < pessoas.size(); i++){
-        if (!cpfTree->search(pessoas[i]->cpf)){
-            cpfTree->add(pessoas[i]->cpf, pessoas[i]);
+        if (!cpfTree->search(pessoas[i]->cpf)){     // primeiro verifica se o cpf já está na árvore de cpfs
+            cpfTree->add(pessoas[i]->cpf, pessoas[i]);  // se nao estiver, adiciona na arvore 
         }
-        nameTree->add(pessoas[i]->nome + pessoas[i]->sobrenome, pessoas[i]);
-        bornTree->add(pessoas[i]->nascimento, pessoas[i]);
+        nameTree->add(pessoas[i]->nome + pessoas[i]->sobrenome, pessoas[i]); // add nome
+        bornTree->add(pessoas[i]->nascimento, pessoas[i]);  // add data de nascimento
     }
 }
 
