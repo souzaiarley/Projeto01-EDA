@@ -30,13 +30,39 @@ public:
         return false;
     }
 
+    void prefixo (string prefix, string upperPrefix){
+        cout << "Showing results for '" << prefix << "'" << endl;
+        prefixo(root, upperPrefix);
+    }
+
     void cpfData(string cpf){
         Node<T> *node = search(root, cpf);
-        if (node != nullptr){
+        if (node == nullptr){
+            cout << "Error: cpf not found" << endl;
+        }
+        else {
+            cout << "Data for '" << cpf << "'" << endl;
             node->pessoa->print();
+        }
+        return;
+    }
+
+    void inRange(T dado1, T dado2){
+        if (dado1 > dado2){
+            cout << "Error: minimum is greater than maximum" << endl;
             return;
         }
-        cout << "Error: cpf not found" << endl;
+        if (dado1 == dado2){
+            cout << "Error: minimum equals to maximum" << endl;
+            return;
+        }
+        Node<T> *node = searchBetween(root, dado1, dado2);
+        if (node == nullptr){
+            cout << "No results found between '" << dado1 << "' and '" << dado2 << "'" << endl;
+            return;
+        }
+        cout << "Showing results between '" << dado1 << "' and '" << dado2 << "':" << endl;
+        inRange(node, dado1, dado2);
     }
 
     ~avl_tree(){
@@ -152,6 +178,56 @@ private:
             return search(node->left, dado); 
         }
         return search(node->right, dado);
+    }
+
+
+    // Função que retorna o primeiro nó da árvore cuja chave esteja entre 'dado1' e 'dado2'.
+    Node<T>* searchBetween(Node<T> *node, T dado1, T dado2){
+        if (node == nullptr){   // árvore vazia
+            return node;
+        }
+        if (node->dado < dado1){    // o nó se encontra abaixo do valor mínimo
+            return searchBetween(node->right, dado1, dado2);
+        }
+        if (node->dado > dado2){    // o nó se encontra acima do valor máximo
+            return searchBetween(node->left, dado1, dado2);
+        }
+        return node;                // o nó se encontra dentro do intervalo
+    }
+
+    // Função que imprime todas as informações do objeto pessoa cujo o nó esteja interligado,
+    // desde que sua chave esteja entre 'dado1' e 'dado2'.
+    void inRange(Node<T> *node, T dado1, T dado2){
+        if (node == nullptr){
+            return;
+        }
+        if (node->dado < dado1){
+            return inRange(node->right, dado1, dado2);
+        }
+        if (node->dado > dado2){
+            return inRange(node->left, dado1, dado2);
+        }
+        inRange(node->left, dado1, dado2);
+        node->pessoa->print();
+        inRange(node->right, dado1, dado2);
+        return;
+    }
+
+    // Função que imprime todas informações do objeto pessoa cujo o nó esteja interligado,
+    // desde que 'prefix' seja prefixo de sua chave.
+    void prefixo(Node<string> *node, string prefix){
+        if (node == nullptr){
+            return;
+        }
+        if (node->dado.substr(0, prefix.length()) < prefix) {
+            return prefixo(node->right, prefix);
+        }
+        if (node->dado.substr(0, prefix.length()) > prefix) {
+            return prefixo(node->left, prefix);
+        }
+        prefixo(node->left, prefix);
+        node->pessoa->print();
+        prefixo(node->right, prefix);
     }
 };
 

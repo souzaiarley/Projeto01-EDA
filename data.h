@@ -1,5 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
+#include <iomanip>
 
 struct Data {
     // atributos
@@ -48,8 +49,13 @@ struct Data {
         return (operator>(data)|| operator==(data));
     }
 
+    bool operator<=(Data data){
+        return (operator<(data)|| operator==(data));
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const Data& data){
-        os << data.mes << "/" << data.dia << "/" << data.ano;
+        os << std::setfill('0') << std::setw(2) << data.mes << "/"
+        << std::setw(2) << data.dia << "/" << std::setw(4) << data.ano;
         return os;
     }
 };

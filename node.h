@@ -1,7 +1,6 @@
 #ifndef NODE_H
 #define NODE_H
 #include "pessoa.h"
-
 template <typename T>
 struct Node {
     // atributos

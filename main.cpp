@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include "avl.h"
+#include "functions.h"
 using namespace std;
 
 // função que retorna um vector de ponteiros para 
@@ -10,8 +11,6 @@ using namespace std;
 vector<Pessoa*> fill_vector(string nome_arquivo);
 
 int main (){
-    system("chcp 65001 > nul");
-    
     vector<Pessoa*> pessoas = fill_vector("data.csv");
     avl_tree<string> *cpfTree = new avl_tree<string>;
     avl_tree<string> *nameTree = new avl_tree<string>;
@@ -19,10 +18,43 @@ int main (){
 
     for (int i = 0; i < pessoas.size(); i++){
         if (!cpfTree->search(pessoas[i]->cpf)){     // primeiro verifica se o cpf já está na árvore de cpfs
-            cpfTree->add(pessoas[i]->cpf, pessoas[i]);  // se nao estiver, adiciona na arvore 
+            cpfTree->add(pessoas[i]->cpf, pessoas[i]);  // se nao estiver, adiciona na arvore
+            nameTree->add(toUpper(pessoas[i]->nome+" "+pessoas[i]->sobrenome), pessoas[i]); // add nome
+            bornTree->add(pessoas[i]->nascimento, pessoas[i]);  // add data de nascimento
         }
-        nameTree->add(pessoas[i]->nome + pessoas[i]->sobrenome, pessoas[i]); // add nome
-        bornTree->add(pessoas[i]->nascimento, pessoas[i]);  // add data de nascimento
+    }
+
+    while (true){
+        system("clear || cls");
+        string op;
+        
+        cout << "===================\n[1] Search CPF\n[2] Search names\n[3] Filter by date\n[4] Exit\n===================\nInput:";
+        getline(cin, op);
+        system("clear || cls");
+
+        if (op != "1" && op != "2" && op != "3" && op != "4"){
+            cout << "Invalid input";
+        }
+
+        if (op == "1"){
+            func1(cpfTree);
+        }
+
+        if (op == "2"){
+            func2(nameTree);
+        }
+
+        if (op == "3"){
+            func3(bornTree);
+        }
+
+        if (op == "4"){
+            cout << "The program has been shut down." << endl;
+            break;
+        }
+
+        cout << "\nPress enter to continue...";
+        getchar(); 
     }
 }
 

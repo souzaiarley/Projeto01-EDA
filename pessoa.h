@@ -20,10 +20,11 @@ class Pessoa {
     Pessoa (){}
 
     void print(){
-        std::cout << "Nome: " << nome << " " << sobrenome << std::endl;
+        std::cout << "=========================" << std::endl;
+        std::cout << "Name: " << nome << " " << sobrenome << std::endl;
         std::cout << "CPF: " << cpf << std::endl;
-        std::cout << "Data de Nascimento: " << nascimento << std::endl;
-        std::cout << "Natural de: " << cidade << std::endl;
+        std::cout << "Born: " << nascimento << std::endl;
+        std::cout << "Born in: " << cidade << std::endl;
     }
 };
 
