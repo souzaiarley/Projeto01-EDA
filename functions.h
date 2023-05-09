@@ -44,7 +44,6 @@ void func1 (avl_tree<string> *tree){
     getline(cin, cpf);    
     cpf = formatCpf(cpf);
     if (isAlphanumeric(cpf) || cpf.length() < 14 || cpf.length() > 14){
-        cout << cpf;
         cout << "error: Invalid CPF" << endl;
         return;
     }
