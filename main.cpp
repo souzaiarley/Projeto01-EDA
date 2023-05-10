@@ -1,3 +1,10 @@
+/*******************************************************
+ * Nome do arquivo: main.cpp
+ * Autor: Iarley Natã Lopes Souza | Matrícula: 535779
+ * Data de criação: 03/05/2023
+ * Descrição: Implementação do primeiro projeto de EDA
+ *******************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -24,6 +31,8 @@ int main (){
         }
     }
 
+    // Loop infinito onde o menu de interação é rodado. Só é encerrado se o usuário pressionar a 
+    // opção de 'Exit'.
     while (true){
         system("clear || cls");
         string op;

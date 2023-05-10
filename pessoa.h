@@ -19,6 +19,7 @@ class Pessoa {
     // construtor padrão
     Pessoa (){}
 
+    // Método para imprimir todos os atributos
     void print(){
         std::cout << "=========================" << std::endl;
         std::cout << "Name: " << nome << " " << sobrenome << std::endl;
