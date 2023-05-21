@@ -55,7 +55,7 @@ public:
         }
         // node é diferente de nulo, então existe um nó de chave 'cpf' na árvore
         else {
-            cout << "Data for '" << cpf << "'" << endl;
+            cout << "Result for '" << cpf << "'" << endl;
             node->pessoa->print();
             // imprime todas as informações do node.
         }

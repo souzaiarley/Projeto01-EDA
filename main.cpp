@@ -37,7 +37,7 @@ int main (){
         system("clear || cls");
         string op;
         
-        cout << "===================\n[1] Search CPF\n[2] Search names\n[3] Filter by date\n[4] Exit\n===================\nInput:";
+        cout << "====== DATA SEARCH ======\n    1. Search CPF\n    2. Search names\n    3. Filter by date\n    4. Exit\n=========================\nInput:";
         getline(cin, op);
         system("clear || cls");
 
