@@ -21,11 +21,12 @@ class Pessoa {
 
     // Método para imprimir todos os atributos
     void print(){
-        std::cout << "=========================" << std::endl;
-        std::cout << "Name: " << nome << " " << sobrenome << std::endl;
-        std::cout << "CPF: " << cpf << std::endl;
-        std::cout << "Born: " << nascimento << std::endl;
-        std::cout << "Born in: " << cidade << std::endl;
+        std::cout << "\n╭" << std::endl;
+        std::cout << "│ Name: " << nome << " " << sobrenome << std::endl;
+        std::cout << "│ CPF: " << cpf << std::endl;
+        std::cout << "│ Born: " << nascimento << std::endl;
+        std::cout << "│ Born in: " << cidade << std::endl;
+        std::cout << "╰" << std::endl;
     }
 };
 

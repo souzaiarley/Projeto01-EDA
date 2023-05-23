@@ -12,6 +12,25 @@
 
 using namespace std;
 
+void menu(){
+    cout << "╔═════════╦═══════════════════╦═════════╗\n";
+    cout << "╠═════════╣    DATA SEARCH    ╠═════════╣\n";
+    cout << "╠═════════╩═══════════════════╩═════════╣\n";
+    cout << "║                                       ║\n";
+    cout << "║           [1] Search CPF              ║\n";
+    cout << "║                                       ║\n";
+    cout << "║           [2] Search names            ║\n";
+    cout << "║                                       ║\n";
+    cout << "║           [3] Filter by date          ║\n";
+    cout << "║                                       ║\n";
+    cout << "║           [4] Add person              ║\n";
+    cout << "║                                       ║\n";
+    cout << "║           [5] Exit                    ║\n";
+    cout << "║                                       ║\n";
+    cout << "╚═══════════════════════════════════════╝\n";
+    cout << "Input: ";
+}
+
 // Essa função recebe uma string e a coloca em formato de cpf.
 string formatCpf(string cpf){
     if (cpf.size() >= 9){
@@ -35,10 +54,10 @@ std::string toUpper(std::string str) {
     return str;
 }
 
-// verifica se uma string é alfanumerica
-bool isAlphanumeric(string str) {
+// verifica se uma string é somente numerica
+bool isNumeric(string str) {
     for (char c : str) {
-        if (!isalnum(c)) {
+        if (!isdigit(c)) {
             return false;
         }
     }
@@ -58,17 +77,18 @@ bool isLeap(int year) {
 void func1 (avl_tree<string> *tree){
     string cpf;
 
-    cout << "Insert CPF: ";
+    cout << "▸ Insert CPF: ";
     getline(cin, cpf);
-    // Faz o tratamento do cpf
-    cpf = formatCpf(cpf);
 
     // Verifica se a entrada para CPF é uma entrada válida.
     // A entrada para um cpf deve conter exatamente 14 caracteres e não deve conter letras.
-    if (isAlphanumeric(cpf) || cpf.length() != 14){
+    if (!isNumeric(cpf) || cpf.length() != 11){
         cout << "error: Invalid CPF" << endl;
         return;
     }
+    // Faz o tratamento do cpf
+    cpf = formatCpf(cpf);
+
     
     system("clear || cls");
     // Chama a funcão da árvore passada como parâmetro para fazer a busca or CPF
@@ -96,7 +116,7 @@ void func3 (avl_tree<Data> *tree){
     char ch;
     int meses[12] = {31,0, 31,30,31,30,31,31,30,31,30,31}; // vetor com os dias de todos os meses do ano, exceto fervereiro
     
-    cout << "Insert first date (MM/DD/YYYY): ";
+    cout << "▸ Insert first date (MM/DD/YYYY): ";
     getline(cin, str);
     ss << str;
 
@@ -128,7 +148,7 @@ void func3 (avl_tree<Data> *tree){
     str.clear();
     ss.clear();
 
-    cout << "\nInsert second date (MM/DD/YYYY): ";
+    cout << "\n▸ Insert second date (MM/DD/YYYY): ";
     getline(cin, str);
     ss << str;
 
@@ -159,4 +179,76 @@ void func3 (avl_tree<Data> *tree){
     system("clear || cls");
     // Chama a função que imprimirá todos os nós cujas chaves se encontram no intervalo determinado
     tree->inRange(date1, date2);
+}
+
+void func4 (avl_tree<string> *cpfs, avl_tree<string> *nome, avl_tree<Data> *data){
+    string cpf, name, surname, city, str;
+    stringstream ss;
+    Data date;
+    char ch;
+    int month, day, year;
+    int meses[12] = {31,0, 31,30,31,30,31,31,30,31,30,31};
+
+    cout << "Please, insert the following data: " << endl;
+    cout << "\n▸ CPF: ";
+    getline(cin, cpf);
+
+    // Verifica se a entrada para CPF é uma entrada válida.
+    // A entrada para um cpf deve conter exatamente 14 caracteres e não deve conter letras.
+    if (!isNumeric(cpf) || cpf.length() != 11){
+        cout << "error: Invalid CPF" << endl;
+        return;
+    }
+
+    // Faz o tratamento do cpf
+    cpf = formatCpf(cpf);
+
+    if (cpfs->search(cpf)){
+        cout << "error: cpf already exists" << endl;
+        return;
+    }
+    cout << "▸ First name: ";
+    cin >> name;
+    cout << "▸ Surname: ";
+    cin >> surname;
+    cout << "▸ Hometown: ";
+    cin.ignore();
+    getline(cin, city);
+
+    cout << "▸ Birthday (MM/DD/YYYY): ";
+    getline(cin, str);
+    ss << str;
+
+    ss >> month >> ch >> day >> ch >> year;
+    // tratamento de data
+    if (year > 2023 || year < 1900 || month < 1 || month > 12){
+        cout << "error: invalid date" << endl;
+        return;
+    }
+    if (month != 2){
+        if (day > meses[month-1] || day < 1){
+            cout << "error: invalid date" << endl;
+            return;
+        }
+    }
+    if (month == 2) {
+        if (isLeap(year) && (day > 29 || day < 1)){
+            cout << "error: invalid date" << endl;
+            return;
+        }
+        if (!isLeap(year) && (day > 28 || day < 1)){
+            cout << "error: invalid date" << endl;
+            return;
+        }
+    }
+
+    date = Data(month, day, year);
+    // Criação objeto pessoa
+    Pessoa *pessoa = new Pessoa(cpf, name, surname, date, city);
+    cpfs->add(cpf, pessoa);
+    nome->add(toUpper(name + " " + surname), pessoa);
+    data->add(date, pessoa);
+    cout << "+---------------------+\n";
+    cout << "| Succesfully added ✓ |\n";
+    cout << "+---------------------+\n";
 }

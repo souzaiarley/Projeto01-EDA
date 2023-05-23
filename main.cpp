@@ -36,12 +36,11 @@ int main (){
     while (true){
         system("clear || cls");
         string op;
-        
-        cout << "====== DATA SEARCH ======\n    1. Search CPF\n    2. Search names\n    3. Filter by date\n    4. Exit\n=========================\nInput:";
+        menu();
         getline(cin, op);
         system("clear || cls");
 
-        if (op != "1" && op != "2" && op != "3" && op != "4"){
+        if (op != "1" && op != "2" && op != "3" && op != "4" && op != "5"){
             cout << "Invalid input";
         }
 
@@ -58,6 +57,10 @@ int main (){
         }
 
         if (op == "4"){
+            func4(cpfTree, nameTree, bornTree);
+        }
+
+        if (op == "5"){
             cout << "The program has been shut down." << endl;
             break;
         }
